@@ -6,6 +6,8 @@ import {
   useReducer,
   ReactNode,
   Dispatch,
+  useEffect,
+  useState,
 } from "react";
 
 export type MachineType = "rocket" | "satellite" | "plane" | "iss" | "other";
@@ -25,10 +27,16 @@ type State = {
 
 type Action =
   | { type: "ADD"; payload: Observation }
-  | { type: "DELETE"; payload: string };
+  | { type: "DELETE"; payload: string }
+  | { type: "LOAD"; payload: Observation[] };
 
 function reducer(state: State, action: Action): State {
   switch (action.type) {
+    case "LOAD":
+      return {
+        ...state,
+        observations: action.payload,
+      };
     case "ADD":
       return {
         ...state,
@@ -53,6 +61,25 @@ const JournalContext = createContext<{
 
 export function JournalProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(reducer, { observations: [] });
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    const saved = localStorage.getItem("birdmachine-journal");
+    if (saved) {
+      try {
+        dispatch({ type: "LOAD", payload: JSON.parse(saved) });
+      } catch (e) {
+        console.error("Erreur localStorage", e);
+      }
+    }
+    setIsLoaded(true);
+  }, []);
+
+  useEffect(() => {
+    if (isLoaded) {
+      localStorage.setItem("birdmachine-journal", JSON.stringify(state.observations));
+    }
+  }, [state.observations, isLoaded]);
 
   return (
     <JournalContext.Provider value={{ state, dispatch }}>
