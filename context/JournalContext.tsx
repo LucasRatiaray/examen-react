@@ -1,0 +1,72 @@
+"use client";
+
+import {
+  createContext,
+  useContext,
+  useReducer,
+  ReactNode,
+  Dispatch,
+} from "react";
+
+export type MachineType = "rocket" | "satellite" | "plane" | "iss" | "other";
+
+export type Observation = {
+  id: string;
+  machineName: string;
+  type: MachineType;
+  date: string;
+  location: string;
+  notes?: string;
+};
+
+type State = {
+  observations: Observation[];
+};
+
+type Action =
+  | { type: "ADD"; payload: Observation }
+  | { type: "DELETE"; payload: string };
+
+function reducer(state: State, action: Action): State {
+  switch (action.type) {
+    case "ADD":
+      return {
+        ...state,
+        observations: [...state.observations, action.payload],
+      };
+    case "DELETE":
+      return {
+        ...state,
+        observations: state.observations.filter(
+          (obs) => obs.id !== action.payload,
+        ),
+      };
+    default:
+      return state;
+  }
+}
+
+const JournalContext = createContext<{
+  state: State;
+  dispatch: Dispatch<Action>;
+} | null>(null);
+
+export function JournalProvider({ children }: { children: ReactNode }) {
+  const [state, dispatch] = useReducer(reducer, { observations: [] });
+
+  return (
+    <JournalContext.Provider value={{ state, dispatch }}>
+      {children}
+    </JournalContext.Provider>
+  );
+}
+
+export function useJournal() {
+  const context = useContext(JournalContext);
+  if (!context) {
+    throw new Error(
+      "useJournal doit être utilisé à l'intérieur d'un JournalProvider",
+    );
+  }
+  return context;
+}

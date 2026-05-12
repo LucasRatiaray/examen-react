@@ -12,14 +12,29 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useJournal } from "@/context/JournalContext";
 
 export function Header() {
   const [open, setOpen] = useState(false);
-
   const t = useTranslations("Nav");
 
+  const { state } = useJournal();
+  const obsCount = state.observations.length;
+
   const links = [
-    { label: t("journal"), href: "/journal" },
+    {
+      label: (
+        <span className="flex items-center gap-2">
+          {t("journal")}
+          {
+            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[10px] text-primary-foreground">
+              {obsCount > 0 ? obsCount : "0"}
+            </span>
+          }
+        </span>
+      ),
+      href: "/journal",
+    },
     { label: t("launches"), href: "/launches" },
     { label: t("about"), href: "/about" },
   ];
@@ -57,13 +72,13 @@ export function Header() {
           </div>
           <div className="flex items-center gap-2">
             {links.map((link, i) => (
-              <a
+              <Link
                 key={i}
                 className={buttonVariants({ variant: "ghost" })}
                 href={link.href}
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
             <ModeToggle />
           </div>
