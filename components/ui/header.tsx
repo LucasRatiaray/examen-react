@@ -1,25 +1,28 @@
 "use client";
 
-import { useState } from 'react';
-import Link from 'next/link';
-import { buttonVariants } from '@/components/ui/button';
-import { MenuToggleIcon } from '@/components/ui/menu-toggle-icon';
-import { ModeToggle } from '@/components/ui/mode-toggle';
+import { useState } from "react";
+import { Link } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
+import { buttonVariants } from "@/components/ui/button";
+import { MenuToggleIcon } from "@/components/ui/menu-toggle-icon";
+import { ModeToggle } from "@/components/ui/mode-toggle";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-
-const links = [
-  { label: 'Journal', href: '/journal' },
-  { label: 'Lancements', href: '/launches' },
-  { label: 'À propos', href: '/about' },
-];
+} from "@/components/ui/dropdown-menu";
 
 export function Header() {
   const [open, setOpen] = useState(false);
+
+  const t = useTranslations("Nav");
+
+  const links = [
+    { label: t("journal"), href: "/journal" },
+    { label: t("launches"), href: "/launches" },
+    { label: t("about"), href: "/about" },
+  ];
 
   return (
     <>
@@ -49,12 +52,16 @@ export function Header() {
       {/* Desktop header */}
       <header className="fixed inset-x-0 top-4 z-50 mx-auto hidden w-full max-w-4xl rounded-md border border-border bg-background/50 shadow backdrop-blur-lg lg:block supports-[backdrop-filter]:bg-background/50">
         <nav className="flex h-12 w-full items-center justify-between px-2">
-        <div className="text-lg font-bold">
-          <Link href="/">BirdMachine</Link>
-        </div>
+          <div className="text-lg font-bold">
+            <Link href="/">BirdMachine</Link>
+          </div>
           <div className="flex items-center gap-2">
             {links.map((link, i) => (
-              <a key={i} className={buttonVariants({ variant: 'ghost' })} href={link.href}>
+              <a
+                key={i}
+                className={buttonVariants({ variant: "ghost" })}
+                href={link.href}
+              >
                 {link.label}
               </a>
             ))}

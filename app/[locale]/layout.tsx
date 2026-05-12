@@ -2,6 +2,10 @@ import "@/app/globals.css";
 import { Header } from "@/components/ui/header";
 import { ThemeProvider } from "@/components/theme-provider";
 import { IBM_Plex_Sans, IBM_Plex_Serif } from "next/font/google";
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages, setRequestLocale } from "next-intl/server";
+import { routing, Locale } from "@/i18n/routing";
+import { notFound } from "next/navigation";
 
 const ibmPlexSans = IBM_Plex_Sans({
   subsets: ["latin"],
@@ -15,6 +19,10 @@ const ibmPlexSerif = IBM_Plex_Serif({
   variable: "--font-serif",
 });
 
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
+
 export default async function RootLayout({
   children,
   params,
@@ -23,18 +31,31 @@ export default async function RootLayout({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+
+  if (!routing.locales.includes(locale as Locale)) {
+    notFound();
+  }
+
+  setRequestLocale(locale);
+
+  const messages = await getMessages();
+
   return (
-    <html lang={locale} suppressHydrationWarning className={`${ibmPlexSans.variable} ${ibmPlexSerif.variable}`}>
+    <html
+      lang={locale}
+      suppressHydrationWarning
+      className={`${ibmPlexSans.variable} ${ibmPlexSerif.variable}`}
+    >
       <body>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
           disableTransitionOnChange
         >
-          <Header />
-          <main>
-            {children}
-          </main>
+          <NextIntlClientProvider messages={messages}>
+            <Header />
+            <main>{children}</main>
+          </NextIntlClientProvider>
         </ThemeProvider>
       </body>
     </html>

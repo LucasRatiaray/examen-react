@@ -1,0 +1,18 @@
+{
+  "Nav": {
+    "home": "Home",
+    "launches": "Launches",
+    "journal": "My Journal",
+    "about": "About"
+  },
+  "ObservationForm": {
+    "submit": "Add observation"
+  },
+  "Errors": {
+    "notFound": "Page not found",
+    "serverError": "Server error"
+  },
+  "Metadata": {
+    "title": "BirdMachine"
+  }
+}

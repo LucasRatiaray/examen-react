@@ -131,11 +131,10 @@ export function HeroBirdmachine() {
   return (
     <div className="relative isolate min-h-screen w-full bg-white text-neutral-950 transition-colors duration-700 dark:bg-black dark:text-white">
 
-      {/* Fond : couleur + blobs */}
       <div className="pointer-events-none absolute inset-0 -z-30"
         style={{ backgroundColor: bgColor, backgroundImage: bgGradient, backgroundRepeat: "no-repeat", backgroundSize: "cover" }}
       />
-      {/* Halo diffus en haut */}
+
       <div className="pointer-events-none absolute inset-0 -z-10"
         style={{ background: topGlow, filter: "blur(22px)" }}
       />
@@ -145,7 +144,7 @@ export function HeroBirdmachine() {
         className={`relative flex min-h-screen w-full flex-col gap-16 px-6 py-24 transition-opacity duration-700 md:gap-20 md:px-10 lg:px-16 xl:px-24 ${visible ? "motion-safe:animate-[birdmachine-intro_1s_cubic-bezier(.22,.68,0,1)_forwards]" : "opacity-0"
           }`}
       >
-        {/* En-tête : titre | carte */}
+
         <header className="grid gap-10 pt-16 lg:grid-cols-2 lg:items-start">
 
           <div className="space-y-6">
@@ -157,7 +156,6 @@ export function HeroBirdmachine() {
             </p>
           </div>
 
-          {/* Carte section */}
           <div
             className="relative flex flex-col gap-6 overflow-hidden rounded-3xl border border-neutral-200/80 bg-neutral-100/80 p-8 transition dark:border-white/12 dark:bg-white/6"
             style={{ backgroundImage: dots, backgroundSize: "12px 12px", backgroundRepeat: "repeat" }}
@@ -174,7 +172,6 @@ export function HeroBirdmachine() {
               {active.description}
             </p>
 
-            {/* Onglets */}
             <div className="flex gap-2">
               {(["launches", "journal"] as const).map((key) => (
                 <Button
@@ -199,7 +196,6 @@ export function HeroBirdmachine() {
           </div>
         </header>
 
-        {/* Grille basse : image | globe */}
         <div className="grid gap-10 lg:grid-cols-2 lg:items-stretch">
 
           <figure className="overflow-hidden rounded-[32px] border border-neutral-200/80 transition dark:border-white/12">
