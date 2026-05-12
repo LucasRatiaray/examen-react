@@ -32,6 +32,14 @@ export const LaunchCard = React.forwardRef<HTMLDivElement, LaunchCardProps>(
 
     const agencyName = launch.launch_service_provider?.name || "Inconnue";
 
+    const baseName = (launch.pad?.location?.name || "").split(",")[0];
+    const countryCode = launch.pad?.location?.country_code;
+    const baseDisplay = baseName
+      ? countryCode
+        ? `${baseName} - ${countryCode}`
+        : baseName
+      : "N/A";
+
     return (
       <div
         ref={ref}
@@ -122,6 +130,17 @@ export const LaunchCard = React.forwardRef<HTMLDivElement, LaunchCardProps>(
                 title={launch.mission?.type || "N/A"}
               >
                 {launch.mission?.type || "N/A"}
+              </span>
+            </div>
+            <div className="flex justify-between items-center mt-1">
+              <span className="text-xs text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
+                Base
+              </span>
+              <span
+                className="text-sm font-semibold text-neutral-900 dark:text-neutral-100 text-right truncate w-2/3"
+                title={baseDisplay}
+              >
+                {baseDisplay}
               </span>
             </div>
           </div>

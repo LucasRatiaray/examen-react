@@ -20,6 +20,13 @@ export type SpaceDevsLaunch = {
     type: string;
     description: string;
   } | null;
+  pad: {
+    name: string;
+    location: {
+      name: string;
+      country_code: string;
+    };
+  } | null;
   image: string | null;
 };
 
