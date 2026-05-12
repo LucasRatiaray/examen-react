@@ -12,7 +12,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useJournal } from "@/contexts/JournalContext";
+import { useJournal } from "@/context/JournalContext";
 
 export function Header() {
   const [open, setOpen] = useState(false);

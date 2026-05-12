@@ -6,7 +6,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { routing, Locale } from "@/i18n/routing";
 import { notFound } from "next/navigation";
-import { JournalProvider } from "@/contexts/JournalContext";
+import { JournalProvider } from "@/context/JournalContext";
 
 const ibmPlexSans = IBM_Plex_Sans({
   subsets: ["latin"],

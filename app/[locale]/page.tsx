@@ -7,6 +7,7 @@ import { GlobePulse } from "@/components/ui/globe-pulse";
 import { Button } from "@/components/ui/button";
 import { Plus, Minus } from "lucide-react";
 import { OrbitGlyph } from "@/components/orbit-glyph";
+import { DottedCard } from "@/components/ui/dotted-card";
 import Image from "next/image";
 
 const SECTIONS = {
@@ -40,10 +41,6 @@ export default function HomePage() {
   const active = SECTIONS[section];
   const [speed, setSpeed] = useState(0.001);
 
-  const dots = isDark
-    ? "radial-gradient(circle at 25% 25%, rgba(250,250,250,0.08) 0.7px, transparent 1px), radial-gradient(circle at 75% 75%, rgba(250,250,250,0.08) 0.7px, transparent 1px)"
-    : "radial-gradient(circle at 25% 25%, rgba(17,17,17,0.12) 0.7px, transparent 1px), radial-gradient(circle at 75% 75%, rgba(17,17,17,0.08) 0.7px, transparent 1px)";
-
   return (
     <HeroWrapper>
       <header className="grid gap-10 pt-16 lg:grid-cols-2 lg:items-start">
@@ -61,14 +58,7 @@ export default function HomePage() {
           </p>
         </div>
 
-        <div
-          className="relative flex flex-col gap-6 overflow-hidden rounded-3xl border border-neutral-200/80 bg-neutral-100/80 p-8 transition dark:border-white/12 dark:bg-white/6"
-          style={{
-            backgroundImage: dots,
-            backgroundSize: "12px 12px",
-            backgroundRepeat: "repeat",
-          }}
-        >
+        <DottedCard>
           <div className="flex items-start justify-between gap-4">
             <div className="space-y-2">
               <p className="text-xs uppercase tracking-[0.35em] opacity-60">
@@ -106,7 +96,7 @@ export default function HomePage() {
               </li>
             ))}
           </ul>
-        </div>
+        </DottedCard>
       </header>
 
       <div className="grid gap-10 lg:grid-cols-2 lg:items-stretch">
