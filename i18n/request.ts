@@ -5,9 +5,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
   let locale = await requestLocale;
 
   const isValidLocale = routing.locales.includes(locale as Locale);
-  if (!locale || !isValidLocale) {
-    locale = routing.defaultLocale;
-  }
+  if (!locale || !isValidLocale) locale = routing.defaultLocale;
 
   return {
     locale,

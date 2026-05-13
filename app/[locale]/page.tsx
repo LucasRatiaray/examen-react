@@ -135,7 +135,7 @@ export default function HomePage() {
               <Minus />
             </Button>
             <span className="text-sm uppercase tracking-[0.35em] opacity-60">
-              Vitesse de rotation : {Math.round(speed * 10000)}{" "}
+              Vitesse de rotation : {Math.round(speed * 10000)}
             </span>
             <Button
               variant="pill"

@@ -76,9 +76,7 @@ export function JournalProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
-    if (isLoaded) {
-      localStorage.setItem("birdmachine-journal", JSON.stringify(state.observations));
-    }
+    if (isLoaded) localStorage.setItem("birdmachine-journal", JSON.stringify(state.observations));
   }, [state.observations, isLoaded]);
 
   return (
@@ -90,10 +88,6 @@ export function JournalProvider({ children }: { children: ReactNode }) {
 
 export function useJournal() {
   const context = useContext(JournalContext);
-  if (!context) {
-    throw new Error(
-      "useJournal doit être utilisé à l'intérieur d'un JournalProvider",
-    );
-  }
+  if (!context) throw new Error("useJournal doit être utilisé à l'intérieur d'un JournalProvider");
   return context;
 }

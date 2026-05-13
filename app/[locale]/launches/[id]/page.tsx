@@ -23,9 +23,7 @@ export async function generateMetadata({
   const { id } = await params;
   const launch = await getLaunchById(id);
   
-  if (!launch) {
-    return { title: "Lancement introuvable" };
-  }
+  if (!launch) return { title: "Lancement introuvable" };
 
   return {
     title: `${launch.name} · BirdMachine`,
@@ -44,9 +42,7 @@ export default async function LaunchDetailPage({
   setRequestLocale(locale);
 
   const launch = await getLaunchById(id);
-  if (!launch) {
-    notFound();
-  }
+  if (!launch) notFound();
 
   const dateObj = new Date(launch.net);
   const formattedDate = new Intl.DateTimeFormat(locale, {

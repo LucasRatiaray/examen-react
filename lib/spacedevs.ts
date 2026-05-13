@@ -35,10 +35,12 @@ type SpaceDevsResponse = {
   results: SpaceDevsLaunch[];
 };
 
+const API_URL = "https://ll.thespacedevs.com/2.2.0/launch/";
+const LIMIT = 12;
+
 export async function getUpcomingLaunches(): Promise<SpaceDevsLaunch[]> {
   // 15 minutes (900 secondes) = 4 requêtes / heure.
-  const res = await fetch(
-    "https://ll.thespacedevs.com/2.2.0/launch/upcoming/?limit=12",
+  const res = await fetch(API_URL + `upcoming/?limit=${LIMIT}`,
     {
       next: { revalidate: 900 },
     },
@@ -51,7 +53,7 @@ export async function getUpcomingLaunches(): Promise<SpaceDevsLaunch[]> {
 }
 
 export async function getLaunchById(id: string): Promise<SpaceDevsLaunch | null> {
-  const res = await fetch(`https://ll.thespacedevs.com/2.2.0/launch/${id}/`, {
+  const res = await fetch(API_URL + `${id}/`, {
     next: { revalidate: 900 },
   });
 
