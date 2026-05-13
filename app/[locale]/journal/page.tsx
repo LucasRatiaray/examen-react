@@ -1,6 +1,12 @@
 import { HeroWrapper } from "@/components/ui/hero-wrapper";
 import { JournalList } from "@/components/journal-list";
 import { setRequestLocale } from "next-intl/server";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Mon Journal",
+  description: "Retrouvez toutes vos observations spatiales enregistrées.",
+};
 
 export default async function JournalPage({
   params,

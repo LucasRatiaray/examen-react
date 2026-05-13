@@ -3,52 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 import { useTheme } from "next-themes";
 
-const STYLE_ID = "birdmachine-hero-animations";
-
-const KEYFRAMES = `
-  @keyframes birdmachine-intro {
-    0%   { opacity: 0; transform: translate3d(0,64px,0) scale(0.98); filter: blur(12px); }
-    60%  { filter: blur(0); }
-    100% { opacity: 1; transform: translate3d(0,0,0) scale(1); filter: blur(0); }
-  }
-  @keyframes birdmachine-orbit {
-    0%   { stroke-dashoffset: 0;   transform: rotate(0deg);   transform-origin: 60px 60px; }
-    100% { stroke-dashoffset: -64; transform: rotate(360deg); transform-origin: 60px 60px; }
-  }
-  @keyframes birdmachine-grid {
-    0%, 100% { transform: rotate(-2deg); opacity: 0.7; }
-    50%       { transform: rotate(2deg);  opacity: 1;   }
-  }
-  @keyframes birdmachine-pulse {
-    0%, 100%  { stroke-dasharray: 0   200; opacity: 0.2; }
-    45%, 60%  { stroke-dasharray: 200 0;   opacity: 1;   }
-  }
-  @keyframes birdmachine-glow {
-    0%, 100% { opacity: 0.45; transform: translate3d(0,0,0);   }
-    50%       { opacity: 0.9;  transform: translate3d(0,-8px,0); }
-  }
-  @keyframes birdmachine-drift {
-    0%, 100% { transform: translate3d(0,0,0)    rotate(-3deg); }
-    50%       { transform: translate3d(0,-12px,0) rotate(3deg);  }
-`;
-
 export function HeroWrapper({ children }: { children: React.ReactNode }) {
   const { resolvedTheme } = useTheme();
   const isDark = resolvedTheme !== "light";
 
   const [visible, setVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
-
-  // Injection des keyframes
-  useEffect(() => {
-    if (document.getElementById(STYLE_ID)) return;
-    const el = Object.assign(document.createElement("style"), {
-      id: STYLE_ID,
-      textContent: KEYFRAMES,
-    });
-    document.head.appendChild(el);
-    return () => el.remove();
-  }, []);
 
   // Animation d'entrée via IntersectionObserver
   useEffect(() => {

@@ -21,17 +21,18 @@ export async function generateMetadata({
   params: Promise<{ id: string; locale: string }>;
 }): Promise<Metadata> {
   const { id } = await params;
-  try {
-    const launch = await getLaunchById(id);
-    return {
-      title: `${launch.name} · BirdMachine`,
-      description:
-        launch.mission?.description ||
-        "Détails du lancement spatial sur BirdMachine.",
-    };
-  } catch (error) {
+  const launch = await getLaunchById(id);
+  
+  if (!launch) {
     return { title: "Lancement introuvable" };
   }
+
+  return {
+    title: `${launch.name} · BirdMachine`,
+    description:
+      launch.mission?.description ||
+      "Détails du lancement spatial sur BirdMachine.",
+  };
 }
 
 export default async function LaunchDetailPage({
@@ -42,10 +43,8 @@ export default async function LaunchDetailPage({
   const { id, locale } = await params;
   setRequestLocale(locale);
 
-  let launch;
-  try {
-    launch = await getLaunchById(id);
-  } catch (error) {
+  const launch = await getLaunchById(id);
+  if (!launch) {
     notFound();
   }
 

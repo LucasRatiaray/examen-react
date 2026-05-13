@@ -3,6 +3,12 @@ import { getUpcomingLaunches } from "@/lib/spacedevs";
 import { setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/routing";
 import { LaunchCard } from "@/components/ui/launch-card";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Lancements",
+  description: "Retrouvez les prochains lancements mondiaux en temps réel.",
+};
 
 export default async function LaunchesPage({
   params,

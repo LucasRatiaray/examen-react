@@ -4,6 +4,12 @@ import { setRequestLocale } from "next-intl/server";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "@/i18n/routing";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Nouvelle Observation",
+  description: "Ajoutez une nouvelle observation spatiale à votre journal.",
+};
 
 export default async function NewJournalPage({
   params,
