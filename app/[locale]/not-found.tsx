@@ -2,30 +2,14 @@ import "@/app/globals.css"
 import { Button } from '@/components/ui/button'
 import { ArrowLeft } from 'lucide-react'
 import Image from 'next/image'
-import { IBM_Plex_Sans, IBM_Plex_Serif } from "next/font/google";
 import { OrbitGlyph } from "@/components/orbit-glyph";
 import { DottedCard } from "@/components/ui/dotted-card";
-import { Metadata } from "next";
 import { Link } from "@/i18n/routing";
-
-const ibmPlexSans = IBM_Plex_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-sans",
-});
-
-const ibmPlexSerif = IBM_Plex_Serif({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  variable: "--font-serif",
-});
-
-export const metadata: Metadata = {
-  title: "404",
-  description: "Page non trouvée",
-}
+import { useTranslations } from "next-intl";
 
 export default function LocaleNotFound() {
+  const t = useTranslations("Errors");
+
   return (
     <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center p-4 bg-black text-white overflow-hidden">
       <div className="absolute inset-0 z-0">
@@ -47,12 +31,12 @@ export default function LocaleNotFound() {
           404
         </h1>
         <p className="mb-8 text-neutral-400">
-          Aucun lancement trouvé. Le lancement que vous cherchez n'existe pas ou a été déplacé.
+          {t("notFoundDesc")}
         </p>
         <Button asChild className="h-10 px-6 cursor-pointer rounded-full">
-          <Link href="/launches">
+          <Link href="/">
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Retour aux lancements
+            {t("backHome")}
           </Link>
         </Button>
       </DottedCard>

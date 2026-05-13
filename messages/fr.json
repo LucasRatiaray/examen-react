@@ -5,14 +5,98 @@
     "journal": "Mon Journal",
     "about": "À propos"
   },
+  "Home": {
+    "title": "BirdMachine — chaque lancement, chaque moment.",
+    "description": "Suivez les prochaines missions spatiales en temps réel et tenez votre journal de bord personnel. SpaceX, NASA, ESA et plus — tout en un seul endroit.",
+    "explorer": "Explorer",
+    "rotationSpeed": "Vitesse de rotation",
+    "launchSites": "Sites de lancements",
+    "sections": {
+      "launches": {
+        "title": "Prochains lancements",
+        "label": "Lancements",
+        "description": "Consultez les prochaines missions en temps réel : SpaceX, NASA, Roscosmos et plus. Chaque lancement présenté avec sa fenêtre de tir, sa fusée et son site de lancement.",
+        "items": [
+          "Données issues de The Space Devs API",
+          "Fenêtres de lancement en temps réel",
+          "Filtrage par agence et statut"
+        ]
+      },
+      "journal": {
+        "title": "Journal de bord",
+        "label": "Journal",
+        "description": "Documentez vos observations mission par mission. Rédigez des entrées libres, associez-les à un lancement et retrouvez-les dans votre historique personnel.",
+        "items": [
+          "Sauvegarde locale (localStorage)",
+          "Association à un lancement précis",
+          "Historique chronologique"
+        ]
+      }
+    }
+  },
+  "Launches": {
+    "title": "Prochains Lancements",
+    "subtitle": "Explorez les missions spatiales à venir à travers le monde.",
+    "rocket": "Fusée",
+    "mission": "Mission",
+    "base": "Base",
+    "unknownAgency": "Inconnue",
+    "notAvailable": "N/A",
+    "details": {
+      "notFound": "Lancement introuvable",
+      "defaultDescription": "Détails du lancement spatial sur BirdMachine.",
+      "noDescription": "Aucune description détaillée n'est encore disponible pour cette mission.",
+      "flightInfo": "Informations de vol",
+      "launchDetails": "Détails du lancement",
+      "intro": "Retrouvez ci-dessous les données techniques et contextuelles de cette mission spatiale.",
+      "date": "Date :",
+      "status": "Statut :",
+      "rocket": "Fusée :",
+      "agency": "Agence :",
+      "site": "Site :",
+      "noImage": "Aucune image disponible",
+      "back": "Retour aux lancements"
+    }
+  },
   "ObservationForm": {
-    "submit": "Ajouter l'observation"
+    "title": "Nouvelle Observation",
+    "subtitle": "Enregistrez votre dernière observation spatiale.",
+    "labelMachineName": "Appareil observé *",
+    "labelType": "Type *",
+    "labelDate": "Date *",
+    "labelLocation": "Lieu *",
+    "labelNotes": "Notes (optionnel)",
+    "placeholderMachineName": "Ex: Falcon 9, ISS...",
+    "placeholderType": "Sélectionnez le type",
+    "placeholderLocation": "Ex: Paris, Kourou...",
+    "placeholderNotes": "Quelque chose à noter ?",
+    "submit": "Ajouter l'observation",
+    "types": {
+      "rocket": "Fusée",
+      "satellite": "Satellite",
+      "iss": "Station Spatiale (ISS)",
+      "plane": "Avion",
+      "other": "Autre"
+    }
+  },
+  "Journal": {
+    "title": "Mon Journal de Bord",
+    "subtitle": "Retrouvez toutes vos observations spatiales enregistrées.",
+    "empty": "Vous n'avez pas encore d'observations.",
+    "addFirst": "Ajouter ma première observation",
+    "deleteConfirm": "Supprimer cette observation ?",
+    "count": "{count, plural, =0 {Aucune observation} =1 {1 observation} other {# observations}}"
   },
   "Errors": {
     "notFound": "Page non trouvée",
-    "serverError": "Erreur serveur"
+    "notFoundDesc": "Il semble que vous soyez perdu dans le vide intersidéral. Cette page n'existe pas ou a été déplacée.",
+    "serverError": "Erreur",
+    "serverErrorDesc": "Une anomalie a été détectée. Connexion aux systèmes de lancement perdue ou corrompue.",
+    "backHome": "Retour à l'accueil",
+    "tryAgain": "Réessayer"
   },
   "Metadata": {
-    "title": "BirdMachine"
+    "title": "BirdMachine",
+    "description": "Suivez les lancements spatiaux et gérez votre journal d'observation."
   }
 }

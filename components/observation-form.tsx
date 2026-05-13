@@ -8,8 +8,10 @@ import { useRouter } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
 import { DottedCard } from "@/components/ui/dotted-card";
 import { ChevronDown } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export function ObservationForm() {
+  const t = useTranslations("ObservationForm");
   const { dispatch } = useJournal();
   const router = useRouter();
 
@@ -34,31 +36,31 @@ export function ObservationForm() {
   };
 
   const OPTIONS = [
-    { value: "rocket", label: "Fusée" },
-    { value: "satellite", label: "Satellite" },
-    { value: "iss", label: "Station Spatiale (ISS)" },
-    { value: "plane", label: "Avion" },
-    { value: "other", label: "Autre" },
+    { value: "rocket", label: t("types.rocket") },
+    { value: "satellite", label: t("types.satellite") },
+    { value: "iss", label: t("types.iss") },
+    { value: "plane", label: t("types.plane") },
+    { value: "other", label: t("types.other") },
   ];
 
   return (
     <DottedCard className="max-w-xl w-full mx-auto">
       <div className="mb-6 space-y-2">
         <h2 className="text-2xl font-semibold" style={{ fontFamily: "var(--font-serif)" }}>
-          Nouvelle Observation
+          {t("title")}
         </h2>
         <p className="text-sm text-neutral-600 dark:text-white/60">
-          Enregistrez votre dernière observation spatiale.
+          {t("subtitle")}
         </p>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <div className="space-y-2">
-          <label className="text-sm font-medium">Appareil observé *</label>
+          <label className="text-sm font-medium">{t("labelMachineName")}</label>
           <input
             {...register("machineName")}
             className="flex h-10 w-full rounded-md border border-neutral-200/80 bg-transparent px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-neutral-400 dark:border-white/12"
-            placeholder="Ex: Falcon 9, ISS..."
+            placeholder={t("placeholderMachineName")}
           />
           {errors.machineName && (
             <p className="text-xs text-red-500">{errors.machineName.message}</p>
@@ -66,13 +68,13 @@ export function ObservationForm() {
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm font-medium">Type *</label>
+          <label className="text-sm font-medium">{t("labelType")}</label>
           <div className="relative">
             <select
               {...register("type")}
               className="flex h-10 w-full appearance-none rounded-md border border-neutral-200/80 bg-transparent px-3 pr-10 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-neutral-400 dark:border-white/12"
             >
-              <option value="" className="dark:bg-neutral-900">Sélectionnez un type</option>
+              <option value="" className="dark:bg-neutral-900">{t("placeholderType")}</option>
               {OPTIONS.map((option) => (
                 <option key={option.value} value={option.value} className="dark:bg-neutral-900">
                   {option.label}
@@ -90,11 +92,11 @@ export function ObservationForm() {
 
         <div className="grid gap-6 sm:grid-cols-2">
           <div className="space-y-2">
-            <label className="text-sm font-medium">Lieu *</label>
+            <label className="text-sm font-medium">{t("labelLocation")}</label>
             <input
               {...register("location")}
               className="flex h-10 w-full rounded-md border border-neutral-200/80 bg-transparent px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-neutral-400 dark:border-white/12"
-              placeholder="Ex: Paris"
+              placeholder={t("placeholderLocation")}
             />
             {errors.location && (
               <p className="text-xs text-red-500">{errors.location.message}</p>
@@ -102,7 +104,7 @@ export function ObservationForm() {
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-medium">Date *</label>
+            <label className="text-sm font-medium">{t("labelDate")}</label>
             <input
               type="date"
               {...register("date")}
@@ -115,16 +117,16 @@ export function ObservationForm() {
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm font-medium">Notes (optionnel)</label>
+          <label className="text-sm font-medium">{t("labelNotes")}</label>
           <textarea
             {...register("notes")}
             className="flex min-h-[100px] w-full rounded-md border border-neutral-200/80 bg-transparent px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-neutral-400 dark:border-white/12"
-            placeholder="Météo, visibilité, détails..."
+            placeholder={t("placeholderNotes")}
           />
         </div>
 
         <Button type="submit" className="w-full">
-          Sauvegarder l'observation
+          {t("submit")}
         </Button>
       </form>
     </DottedCard>

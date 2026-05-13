@@ -7,7 +7,6 @@ import {
   ReactNode,
   Dispatch,
   useEffect,
-  useState,
 } from "react";
 
 export type MachineType = "rocket" | "satellite" | "plane" | "iss" | "other";
@@ -23,12 +22,14 @@ export type Observation = {
 
 type State = {
   observations: Observation[];
+  isLoaded: boolean;
 };
 
 type Action =
   | { type: "ADD"; payload: Observation }
   | { type: "DELETE"; payload: string }
-  | { type: "LOAD"; payload: Observation[] };
+  | { type: "LOAD"; payload: Observation[] }
+  | { type: "READY" };
 
 function reducer(state: State, action: Action): State {
   switch (action.type) {
@@ -36,6 +37,12 @@ function reducer(state: State, action: Action): State {
       return {
         ...state,
         observations: action.payload,
+        isLoaded: true,
+      };
+    case "READY":
+      return {
+        ...state,
+        isLoaded: true,
       };
     case "ADD":
       return {
@@ -60,8 +67,10 @@ const JournalContext = createContext<{
 } | null>(null);
 
 export function JournalProvider({ children }: { children: ReactNode }) {
-  const [state, dispatch] = useReducer(reducer, { observations: [] });
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [state, dispatch] = useReducer(reducer, {
+    observations: [],
+    isLoaded: false,
+  });
 
   useEffect(() => {
     const saved = localStorage.getItem("birdmachine-journal");
@@ -70,14 +79,21 @@ export function JournalProvider({ children }: { children: ReactNode }) {
         dispatch({ type: "LOAD", payload: JSON.parse(saved) });
       } catch (e) {
         console.error("Erreur localStorage", e);
+        dispatch({ type: "READY" });
       }
+    } else {
+      dispatch({ type: "READY" });
     }
-    setIsLoaded(true);
   }, []);
 
   useEffect(() => {
-    if (isLoaded) localStorage.setItem("birdmachine-journal", JSON.stringify(state.observations));
-  }, [state.observations, isLoaded]);
+    if (state.isLoaded) {
+      localStorage.setItem(
+        "birdmachine-journal",
+        JSON.stringify(state.observations),
+      );
+    }
+  }, [state.observations, state.isLoaded]);
 
   return (
     <JournalContext.Provider value={{ state, dispatch }}>

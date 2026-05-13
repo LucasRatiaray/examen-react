@@ -6,6 +6,7 @@ import { RefreshCcw } from "lucide-react";
 import Image from "next/image";
 import { OrbitGlyph } from "@/components/orbit-glyph";
 import { DottedCard } from "@/components/ui/dotted-card";
+import { useTranslations } from "next-intl";
 
 export default function ErrorPage({
   error,
@@ -14,6 +15,8 @@ export default function ErrorPage({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  const t = useTranslations("Errors");
+
   useEffect(() => {
     console.error("API ou Erreur Client interceptée:", error);
   }, [error]);
@@ -36,14 +39,14 @@ export default function ErrorPage({
           <OrbitGlyph />
         </div>
         <h1 className="mb-2 text-5xl font-semibold" style={{ fontFamily: "var(--font-serif)" }}>
-          Erreur
+          {t("serverError")}
         </h1>
         <p className="mb-8 text-neutral-400">
-          Une anomalie a été détectée. Connexion aux systèmes de lancement perdue ou corrompue.
+          {t("serverErrorDesc")}
         </p>
         <Button onClick={() => reset()} className="h-10 px-6 cursor-pointer rounded-full bg-white text-black hover:bg-neutral-200">
           <RefreshCcw className="mr-2 h-4 w-4" />
-          Réessayer
+          {t("tryAgain")}
         </Button>
       </DottedCard>
     </div>

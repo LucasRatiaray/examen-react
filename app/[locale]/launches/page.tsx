@@ -1,14 +1,17 @@
 import { HeroWrapper } from "@/components/ui/hero-wrapper";
 import { getUpcomingLaunches } from "@/lib/spacedevs";
-import { setRequestLocale } from "next-intl/server";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/routing";
 import { LaunchCard } from "@/components/ui/launch-card";
-import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "Lancements",
-  description: "Retrouvez les prochains lancements mondiaux en temps réel.",
-};
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Launches" });
+  return {
+    title: t("title"),
+    description: t("subtitle"),
+  };
+}
 
 export default async function LaunchesPage({
   params,
@@ -18,6 +21,7 @@ export default async function LaunchesPage({
   const { locale } = await params;
   setRequestLocale(locale);
 
+  const t = await getTranslations("Launches");
   const recentLaunches = await getUpcomingLaunches();
 
   return (
@@ -28,10 +32,10 @@ export default async function LaunchesPage({
             className="text-4xl font-semibold tracking-tight sm:text-5xl"
             style={{ fontFamily: "var(--font-serif)" }}
           >
-            Lancements
+            {t("title")}
           </h1>
           <p className="max-w-2xl text-lg text-neutral-600 dark:text-neutral-400">
-            Retrouvez les prochains lancements mondiaux en temps réel.
+            {t("subtitle")}
           </p>
         </header>
 

@@ -1,6 +1,6 @@
 import { HeroWrapper } from "@/components/ui/hero-wrapper";
 import { getLaunchById, getUpcomingLaunches } from "@/lib/spacedevs";
-import { setRequestLocale } from "next-intl/server";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/routing";
 import { notFound } from "next/navigation";
 import Image from "next/image";
@@ -20,16 +20,16 @@ export async function generateMetadata({
 }: {
   params: Promise<{ id: string; locale: string }>;
 }): Promise<Metadata> {
-  const { id } = await params;
+  const { id, locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Launches.details" });
   const launch = await getLaunchById(id);
   
-  if (!launch) return { title: "Lancement introuvable" };
+  if (!launch) return { title: t("notFound") };
 
   return {
     title: `${launch.name} · BirdMachine`,
     description:
-      launch.mission?.description ||
-      "Détails du lancement spatial sur BirdMachine.",
+      launch.mission?.description || t("defaultDescription"),
   };
 }
 
@@ -41,6 +41,7 @@ export default async function LaunchDetailPage({
   const { id, locale } = await params;
   setRequestLocale(locale);
 
+  const t = await getTranslations("Launches.details");
   const launch = await getLaunchById(id);
   if (!launch) notFound();
 
@@ -56,7 +57,7 @@ export default async function LaunchDetailPage({
         <Button variant="outline" size="icon" className="rounded-full" asChild>
           <Link
             href="/launches"
-            aria-label="Retour aux lancements"
+            aria-label={t("back")}
           >
             <ArrowLeft className="h-[1.2rem] w-[1.2rem]" />
           </Link>
@@ -74,7 +75,7 @@ export default async function LaunchDetailPage({
             </h1>
             <p className="max-w-2xl text-base text-neutral-600 dark:text-white/60 md:text-lg">
               {!launch.mission?.description || launch.mission.description === "Details TBD."
-                ? "Aucune description détaillée n'est encore disponible pour cette mission."
+                ? t("noDescription")
                 : launch.mission.description}
             </p>
           </header>
@@ -83,47 +84,47 @@ export default async function LaunchDetailPage({
             <div className="flex items-start justify-between gap-4">
               <div className="space-y-2">
                 <p className="text-xs uppercase tracking-[0.35em] opacity-60">
-                  Informations de vol
+                  {t("flightInfo")}
                 </p>
                 <h2
                   className="text-xl font-semibold tracking-tight"
                   style={{ fontFamily: "var(--font-serif)" }}
                 >
-                  Détails du lancement
+                  {t("launchDetails")}
                 </h2>
               </div>
               <OrbitGlyph />
             </div>
 
             <p className="text-sm leading-relaxed text-neutral-600 dark:text-white/60">
-              Retrouvez ci-dessous les données techniques et contextuelles de cette mission spatiale.
+              {t("intro")}
             </p>
 
             <ul className="space-y-2 text-sm text-neutral-600 dark:text-white/60">
               <li className="flex items-start gap-3">
                 <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-current" />
-                <span className="capitalize">Date : {formattedDate}</span>
+                <span className="capitalize">{t("date")} {formattedDate}</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-current" />
-                <span>Statut : {launch.status.name}</span>
+                <span>{t("status")} {launch.status.name}</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-current" />
                 <span>
-                  Fusée : {launch.rocket?.configuration.name || "Inconnue"}
+                  {t("rocket")} {launch.rocket?.configuration.name || t("noImage")}
                 </span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-current" />
                 <span>
-                  Agence : {launch.launch_service_provider?.name || "Inconnue"}
+                  {t("agency")} {launch.launch_service_provider?.name || t("noImage")}
                 </span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-current" />
                 <span>
-                  Site : {launch.pad?.name} - {launch.pad?.location.country_code}
+                  {t("site")} {launch.pad?.name} - {launch.pad?.location.country_code}
                 </span>
               </li>
             </ul>
@@ -142,7 +143,7 @@ export default async function LaunchDetailPage({
               />
             ) : (
               <div className="absolute inset-0 flex items-center justify-center bg-neutral-200 dark:bg-white/5">
-                <span className="opacity-50">Aucune image disponible</span>
+                <span className="opacity-50">{t("noImage")}</span>
               </div>
             )}
           </div>
@@ -151,7 +152,7 @@ export default async function LaunchDetailPage({
             <span className="truncate pr-4">{launch.rocket?.configuration.name} — {launch.pad?.name}</span>
             <span className="flex shrink-0 items-center gap-2">
               <span className="h-1 w-6 sm:w-8 bg-current" />
-              <span className="truncate max-w-[100px] sm:max-w-none">{launch.launch_service_provider?.name || "Agence"}</span>
+              <span className="truncate max-w-[100px] sm:max-w-none">{launch.launch_service_provider?.name || t("agency").replace(":", "")}</span>
             </span>
           </figcaption>
         </figure>

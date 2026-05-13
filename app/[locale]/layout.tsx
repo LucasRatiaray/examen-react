@@ -3,7 +3,7 @@ import { Header } from "@/components/ui/header";
 import { ThemeProvider } from "@/components/theme-provider";
 import { IBM_Plex_Sans, IBM_Plex_Serif } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages, setRequestLocale } from "next-intl/server";
+import { getMessages, setRequestLocale, getTranslations } from "next-intl/server";
 import { routing, Locale } from "@/i18n/routing";
 import { notFound } from "next/navigation";
 import { JournalProvider } from "@/context/JournalContext";
@@ -25,13 +25,18 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
-export const metadata: Metadata = {
-  title: {
-    template: "%s | BirdMachine",
-    default: "BirdMachine - Explorateur Spatial",
-  },
-  description: "Suivez les lancements spatiaux en temps réel et tenez votre journal d'observations.",
-};
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Metadata" });
+  
+  return {
+    title: {
+      template: `%s | ${t("title")}`,
+      default: `${t("title")} - Explorateur Spatial`,
+    },
+    description: t("description"),
+  };
+}
 
 export default async function RootLayout({
   children,

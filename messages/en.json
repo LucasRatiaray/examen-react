@@ -5,14 +5,98 @@
     "journal": "My Journal",
     "about": "About"
   },
+  "Home": {
+    "title": "BirdMachine — every launch, every moment.",
+    "description": "Follow upcoming space missions in real-time and keep your personal flight log. SpaceX, NASA, ESA and more — all in one place.",
+    "explorer": "Explore",
+    "rotationSpeed": "Rotation speed",
+    "launchSites": "Launch Sites",
+    "sections": {
+      "launches": {
+        "title": "Upcoming Launches",
+        "label": "Launches",
+        "description": "Check upcoming missions in real-time: SpaceX, NASA, Roscosmos and more. Each launch presented with its launch window, rocket and site.",
+        "items": [
+          "Data from The Space Devs API",
+          "Real-time launch windows",
+          "Filter by agency and status"
+        ]
+      },
+      "journal": {
+        "title": "Flight Log",
+        "label": "Journal",
+        "description": "Document your observations mission by mission. Write free entries, associate them with a launch and find them in your history.",
+        "items": [
+          "Local storage (localStorage)",
+          "Link to specific launches",
+          "Chronological history"
+        ]
+      }
+    }
+  },
+  "Launches": {
+    "title": "Upcoming Launches",
+    "subtitle": "Explore upcoming space missions from around the world.",
+    "rocket": "Rocket",
+    "mission": "Mission",
+    "base": "Base",
+    "unknownAgency": "Unknown",
+    "notAvailable": "N/A",
+    "details": {
+      "notFound": "Launch not found",
+      "defaultDescription": "Space launch details on BirdMachine.",
+      "noDescription": "No detailed description is available for this mission yet.",
+      "flightInfo": "Flight Information",
+      "launchDetails": "Launch Details",
+      "intro": "Find the technical and contextual data of this space mission below.",
+      "date": "Date:",
+      "status": "Status:",
+      "rocket": "Rocket:",
+      "agency": "Agency:",
+      "site": "Site:",
+      "noImage": "No image available",
+      "back": "Back to launches"
+    }
+  },
   "ObservationForm": {
-    "submit": "Add observation"
+    "title": "New Observation",
+    "subtitle": "Record your latest space observation.",
+    "labelMachineName": "Observed device *",
+    "labelType": "Type *",
+    "labelDate": "Date *",
+    "labelLocation": "Location *",
+    "labelNotes": "Notes (optional)",
+    "placeholderMachineName": "Ex: Falcon 9, ISS...",
+    "placeholderType": "Select type",
+    "placeholderLocation": "Ex: London, Cape Canaveral...",
+    "placeholderNotes": "Anything to note?",
+    "submit": "Add observation",
+    "types": {
+      "rocket": "Rocket",
+      "satellite": "Satellite",
+      "iss": "Space Station (ISS)",
+      "plane": "Plane",
+      "other": "Other"
+    }
+  },
+  "Journal": {
+    "title": "My Flight Log",
+    "subtitle": "Find all your recorded space observations.",
+    "empty": "You don't have any observations yet.",
+    "addFirst": "Add my first observation",
+    "deleteConfirm": "Delete this observation?",
+    "count": "{count, plural, =0 {No observations} =1 {1 observation} other {# observations}}"
   },
   "Errors": {
     "notFound": "Page not found",
-    "serverError": "Server error"
+    "notFoundDesc": "It seems you are lost in deep space. This page does not exist or has been moved.",
+    "serverError": "Error",
+    "serverErrorDesc": "An anomaly has been detected. Connection to launch systems lost or corrupted.",
+    "backHome": "Back to home",
+    "tryAgain": "Try again"
   },
   "Metadata": {
-    "title": "BirdMachine"
+    "title": "BirdMachine",
+    "description": "Follow space launches and manage your observation journal."
   }
 }

@@ -5,9 +5,12 @@ import { DottedCard } from "@/components/ui/dotted-card";
 import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
 import { Plus, Trash2, Calendar, MapPin, Tag } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export function JournalList() {
   const { state, dispatch } = useJournal();
+  const t = useTranslations("Journal");
+  const tForm = useTranslations("ObservationForm");
 
   if (state.observations.length === 0) {
     return (
@@ -16,14 +19,14 @@ export function JournalList() {
           <Tag className="h-8 w-8 opacity-50" />
         </div>
         <h3 className="mb-2 text-xl font-semibold" style={{ fontFamily: "var(--font-serif)" }}>
-          Aucune observation
+          {t("empty")}
         </h3>
         <p className="mb-6 max-w-md text-sm text-neutral-600 dark:text-white/60">
-          Vous n'avez pas encore consigné d'observations. Gardez un œil vers le ciel et commencez votre journal !
+          {t("subtitle")}
         </p>
         <Button asChild>
           <Link href="/journal/new">
-            <Plus className="mr-2 h-4 w-4" /> Ajouter une observation
+            <Plus className="mr-2 h-4 w-4" /> {t("addFirst")}
           </Link>
         </Button>
       </DottedCard>
@@ -32,10 +35,13 @@ export function JournalList() {
 
   return (
     <div className="space-y-8">
-      <div className="flex justify-end">
+      <div className="flex justify-between items-center">
+        <p className="text-sm text-neutral-600 dark:text-white/60">
+          {t("count", { count: state.observations.length })}
+        </p>
         <Button asChild>
           <Link href="/journal/new">
-            <Plus className="mr-2 h-4 w-4" /> Nouvelle observation
+            <Plus className="mr-2 h-4 w-4" /> {tForm("submit")}
           </Link>
         </Button>
       </div>
@@ -46,7 +52,7 @@ export function JournalList() {
             <div className="flex items-start justify-between gap-4">
               <div className="space-y-1">
                 <span className="text-[0.65rem] uppercase tracking-[0.2em] opacity-60">
-                  {obs.type}
+                  {tForm(`types.${obs.type}`)}
                 </span>
                 <h3 className="text-lg font-semibold tracking-tight line-clamp-1">
                   {obs.machineName}
@@ -56,7 +62,11 @@ export function JournalList() {
                 variant="ghost"
                 size="icon"
                 className="h-8 w-8 text-red-500 opacity-50 hover:bg-red-500/10 hover:opacity-100 dark:text-red-400"
-                onClick={() => dispatch({ type: "DELETE", payload: obs.id })}
+                onClick={() => {
+                  if (confirm(t("deleteConfirm"))) {
+                    dispatch({ type: "DELETE", payload: obs.id });
+                  }
+                }}
                 aria-label="Supprimer"
               >
                 <Trash2 className="h-4 w-4" />
@@ -77,7 +87,7 @@ export function JournalList() {
             {obs.notes && (
               <div className="mt-4 border-t border-neutral-200/50 pt-4 dark:border-white/10">
                 <p className="line-clamp-2 text-xs italic opacity-70">
-                  "{obs.notes}"
+                  &quot;{obs.notes}&quot;
                 </p>
               </div>
             )}

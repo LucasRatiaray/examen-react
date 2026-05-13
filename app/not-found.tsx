@@ -48,7 +48,7 @@ export default function RootNotFound() {
             404
           </h1>
           <p className="mb-8 text-neutral-400">
-            Cette orbite est vide. La page que vous cherchez n'existe pas ou a été déplacée.
+            Cette orbite est vide. La page que vous cherchez n&apos;existe pas ou a été déplacée.
           </p>
           <Button asChild className="h-10 px-6 cursor-pointer rounded-full">
             <Link href="/">

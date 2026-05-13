@@ -3,6 +3,7 @@ import { Rocket } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { SpaceDevsLaunch } from "@/lib/spacedevs";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 export interface LaunchCardProps {
   launch: SpaceDevsLaunch;
@@ -11,6 +12,7 @@ export interface LaunchCardProps {
 
 export const LaunchCard = React.forwardRef<HTMLDivElement, LaunchCardProps>(
   ({ launch, className }, ref) => {
+    const t = useTranslations("Launches");
     const date = new Date(launch.net);
     const dateStr = date.toLocaleDateString("fr-FR", {
       day: "2-digit",
@@ -30,7 +32,7 @@ export const LaunchCard = React.forwardRef<HTMLDivElement, LaunchCardProps>(
       launch.image ||
       "https://images.unsplash.com/photo-1516849841032-87cbac4d88f7?auto=format&fit=crop&q=80&w=400&h=400";
 
-    const agencyName = launch.launch_service_provider?.name || "Inconnue";
+    const agencyName = launch.launch_service_provider?.name || t("unknownAgency");
 
     const baseName = (launch.pad?.location?.name || "").split(",")[0];
     const countryCode = launch.pad?.location?.country_code;
@@ -38,7 +40,7 @@ export const LaunchCard = React.forwardRef<HTMLDivElement, LaunchCardProps>(
       ? countryCode
         ? `${baseName} - ${countryCode}`
         : baseName
-      : "N/A";
+      : t("notAvailable");
 
     return (
       <div
@@ -112,29 +114,29 @@ export const LaunchCard = React.forwardRef<HTMLDivElement, LaunchCardProps>(
           <div className="flex flex-col gap-3 mt-auto">
             <div className="flex justify-between items-center">
               <span className="text-xs text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
-                Fusée
+                {t("rocket")}
               </span>
               <span
                 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100 text-right truncate w-2/3"
-                title={launch.rocket?.configuration.name || "N/A"}
+                title={launch.rocket?.configuration.name || t("notAvailable")}
               >
-                {launch.rocket?.configuration.name || "N/A"}
+                {launch.rocket?.configuration.name || t("notAvailable")}
               </span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-xs text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
-                Mission
+                {t("mission")}
               </span>
               <span
                 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100 text-right truncate w-2/3"
-                title={launch.mission?.type || "N/A"}
+                title={launch.mission?.type || t("notAvailable")}
               >
-                {launch.mission?.type || "N/A"}
+                {launch.mission?.type || t("notAvailable")}
               </span>
             </div>
             <div className="flex justify-between items-center mt-1">
               <span className="text-xs text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
-                Base
+                {t("base")}
               </span>
               <span
                 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100 text-right truncate w-2/3"
